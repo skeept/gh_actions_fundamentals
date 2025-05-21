@@ -1,7 +1,7 @@
 name: 'Helloe Docker Action'
 description: 'Saw hello to folks'
 inputs:
-  who-to-greet:
+    who-to-greet:
     description: 'who to greet'
     required: true
     default: 'whoever'
