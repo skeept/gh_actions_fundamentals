@@ -29,5 +29,48 @@ jobs:
         run: |
           echo "The repo ${{ github.repository }} contains following files:"
           tree
+  Test:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    needs: Build
+    environment: Test
+    steps:
+      - run: |
+        echo "XX: Testing..."
+
+  Load-Test:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    needs: Build
+    environment: Load-Test
+    steps:
+      - run: |
+        echo "XXX Testing"
+        sleep 15
+
+  Production:
+    runs-on: ubuntu-latest
+    needs: [Test, Load-Test]
+    environment:
+      name: Production
+      url: https://writeabout.net
+    if: github.event.inputs.environment == "Production"
+    steps:
+      - run: |
+        echo "XXX Step 1"
+        sleep 10
+      - run: |
+        echo "XXX Step 2"
+        sleep 10
+      - run: |
+        echo "YY Step 3"
+        sleep 10
+      - run: |
+        echo "ZZ Step 4"
+        sleep 10
+      - run: |
+        echo "XX Step 5"
+        sleep 10
+        
     
     
